@@ -14,7 +14,21 @@ if(!class_exists('Simple_Popup')) :
             
             add_action('wp_ajax_nopriv_popup_email_send', array($this, 'ajax_processing'));
             add_action('wp_ajax_popup_email_send', array($this, 'ajax_processing'));
+            
+         /*
+             *          To set cookie for 1 day
+             */
+            add_action('wp_ajax_nopriv_popup_email_close', array($this, 'ajax_processing_oneday'));
+            add_action('wp_ajax_popup_email_close', array($this, 'ajax_processing_oneday'));
         }
+        
+        /* This function sets cooke for one day*/
+        function ajax_processing_oneday(){
+            $time = time() + 24*60*60;
+            setcookie('car_popup_info','sent',$time,'/');
+            exit;
+        }
+        
         
         function check(){
             var_dump(POPUP_CSS);
@@ -84,11 +98,11 @@ if(!class_exists('Simple_Popup')) :
         ?>
                                 <div id="popup">
                                        <div style="display:none;" id="popup-content" class="window"> 
-                                               <h2> Please provide some information </h2>
-                                                <p>Name: <input id="popup-name" size='40' type='text' name='popup_name' value='' /></p>
-                                                <p>Email: <input id="popup-email" size='40' type='text' name='popup_email' value='' /></p>
-                                                <p>Phone: <input id="popup-phone" size='40' type='text' name='popup_phone' value='' /></p>
-                                                <p> <button id='popup-info-submit'>Send</button> </p>
+                                               <h4> We can help you find your perfect car.<br/>Lets get started! Get access to special prices! </h4>
+                                                <p>Name: <input id="popup-name" type='text' name='popup_name' value='' /></p>
+                                                <p>Email: <input id="popup-email" type='text' name='popup_email' value='' /></p>
+                                                <p>Phone: <input id="popup-phone" type='text' name='popup_phone' value='' /></p>
+                                                <p> <button id='popup-info-submit'>Get Started</button> </p>
                                                  <a href="#" class="close"></a>
                                       </div> 
                                         <div id="blanket"></div>

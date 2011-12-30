@@ -60,17 +60,31 @@ jQuery(document).ready(function($) {
     //if close button is clicked
     $('.window .close').click(function (e) {
         //Cancel the link behavior
-       			
-        $('#blanket').fadeOut();
-        $('.window').slideUp();
+         $.ajax({				
+            async: true,
+            type: 'post',
+            url: ajax_url,
+            dataType: "html",
+            cache: false,
+            timeout: 100000,
+            data:{
+                'action' : 'popup_email_close'                
+            },
+
+            success:function(result){
+                $('#blanket').fadeOut();
+                $('.window').slideUp();                
+            },
+
+            error: function(jqXHR, textStatus, errorThrown){               
+                $('#blanket').fadeOut();
+                $('.window').slideUp();              
+            }
+       });
+       
     });        
 
-    //if blanket is clicked
-    $('#blanket').click(function () {
-        $(this).fadeOut();
-        $('.window').slideUp();
-    });
-    
+  
     //if the form is submitted
     $('#popup-info-submit').click(function(){
         
@@ -111,12 +125,9 @@ jQuery(document).ready(function($) {
             },
 
             success:function(result){
-               if(result == 'y'){
-                   alert('Thank you for your Email !');                  
-               }
-               else{
-                    alert('Email can\'t be sent ! Please check your email and try again');
-               }
+              
+                alert('Thank you for your Email !');                 
+               
                 $('#blanket').fadeOut();
                 $('.window').slideUp();
                 
@@ -128,7 +139,7 @@ jQuery(document).ready(function($) {
                 $('.window').slideUp();              
             }
        });
-
+      
        
     });
 
